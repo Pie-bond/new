@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const letterText = document.getElementById("letter-text");
-    const fullText = `To a girl who is more than a friend),
+    const fullText = `To a girl who is more than a friend,
 
 I was thinking so hard on what to write here..my mind was kind of empty.. and just randomly now I am thinking abt what love is..
 I wonder what love is..yes it is cute and wonderful but it also kind of  gives the fear of separation..
