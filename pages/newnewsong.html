@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Favorite Song</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;500&display=swap');
+        
+        body {
+            background-color: #fce4ec;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+        }
+        h1 {
+            color: #d81b60;
+            margin: 10px 0;
+            font-size: 2.5rem;
+        }
+        p {
+            margin: 10px 0 20px;
+            font-size: 2rem;
+            color: #555;
+        }
+      
+        .lyrics-container {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 500px;
+            height: 200px;
+            overflow-y: auto;
+            background: #fff3e0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            text-align: center;
+        }
+        .lyrics {
+            font-size: 2rem;
+            font-family: 'Dancing Script', cursive;
+            color: #333;
+            line-height: 1.6;
+            transition: transform 0.5s ease-in-out;
+        }
+        /* Custom video controls */
+        video::-webkit-media-controls-panel {
+            background: rgba(216, 27, 96, 0.8);
+            border-radius: 0 0 10px 10px;
+        }
+        video::-webkit-media-controls-play-button,
+        video::-webkit-media-controls-mute-button,
+        video::-webkit-media-controls-timeline,
+        video::-webkit-media-controls-current-time-display,
+        video::-webkit-media-controls-time-remaining-display {
+            filter: invert(1);
+        }
+        .additional-videos {
+            margin-top: 30px;
+        }
+        .additional-videos video {
+            margin: 10px;
+            width: 90%;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Few songs for u🎶</h1>
+    <p>"IK u have far greater knowledge in songs than me..still i wanna share these songs with u..itha kekum mothu lam nee than nyabagam varuva..💖"</p>
+    
+    <div class="video-container">
+        <video id="songVideo" controls autoplay loop preload="auto">
+            <source src="https://files.catbox.moe/hwe7w3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <div class="lyrics-container">
+        <div class="lyrics" id="lyrics"></div>
+    </div>
+    
+    <!-- Additional Videos Section -->
+    <div class="additional-videos">
+        <h2>Some more songs that reminds me of u</h2>
+        <video controls>
+            <source src="https://files.catbox.moe/s7p0bb.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls>
+            <source src="https://files.catbox.moe/bbj3wh.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls>
+            <source src="https://files.catbox.moe/di2nth.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls>
+            <source src="https://files.catbox.moe/tqwi4e.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <script>
+        const lyricsText = [
+            "Hairaan hoon ki kuch bhi na maangoon kabhi main",
+            "Jo tum mere ho",
+            "Aisa ho kyun ki lagta hai haasil sabhi hai",
+            "Jo tum mere ho",
+            "Jo tum mere ho",
+            "To main kuch nahin maangoon duniya se",
+            "Aur tum ho hi nahin",
+            "To main jeena nahin chaahoon duniya mein",
+            "Aur nazron mein mere",
+            "Ik jahaan hai jahaan tu aur main ab saath hain",
+            "Aur wahaan koyi nahin",
+            "Tu aur main hi, haaye",
+            "Aur aaoge, aise aaoge",
+            "Teri-meri kya ye raahein yoon judi hain?",
+            "Aur raahon mein hi jo tum aaye kabhi",
+            "Ham to pyaar se hi mar jaayeinge",
+            "Aur aaoge, aise aaoge",
+            "Teri-meri kya ye raahein yoon judi hain?",
+            "Aur raahon mein hi jo tum aaye nahin",
+            "Ham to phir bhi tumhein hi chaaheinge",
+            "Jo tum mere ho",
+            "To main kuch nahin maangoon duniya se",
+            "Poochhe ye tu ki tujh mein main kya dekhta hoon",
+            "Jab chaaron taraf aaj kitne hi saare nazaare hain",
+            "Jaane na tu khud ko yoon na jaane kyun",
+            "Nazron se meri yahaan dekho na khud ko zara",
+            "Dekho na, dekho na",
+            "Zulfon se, kaise zulfon se",
+            "Teri chhupti pyaari-pyaari si muskaan hai",
+            "Aur nazrein jhuki, aur nazrein uthi",
+            "To main kya hi karoon, barbaad main",
+            "Tere honthon ko, tere honthon ko",
+            "Jinse rakhti mere pyaare-pyaare naam hain",
+            "Aur dil ka tere, aur dil ka tere",
+            "Ab main kya hi kahoon, kya baat hai",
+            "Aur, haan, dekho yahaan",
+            "Kaise aayi do dilon ki ye baaraat hai",
+            "Par kya khula aasmaan",
+            "Ya phir laayi yahaan zoron se barsaat hai?",
+            "Chaahe hon chhaaye bhi baadal to",
+            "Chaahein phir bhi tumhein, kya pata tum ko?",
+            "Maangoon na kuch aur jo",
+            "Tum mere ho"
+        ];
+        
+        const timings = [0, 7, 14, 20, 40, 44, 49, 54, 59, 64, 69, 74, 80, 86, 90, 96, 101, 106, 112, 117, 121, 127, 142, 147, 152, 158, 163, 164, 168, 173, 179, 184, 189, 194, 200, 205, 210, 215, 219, 225, 230, 236, 240];
+        let video = document.getElementById("songVideo");
+        let lyricsDiv = document.getElementById("lyrics");
+        
+        function updateLyrics(index) {
+            lyricsDiv.innerText = lyricsText[index] || "";
+        }
+        
+        video.addEventListener("timeupdate", () => {
+            let currentTime = video.currentTime;
+            for (let i = 0; i < timings.length; i++) {
+                if (currentTime >= timings[i] && (i === timings.length - 1 || currentTime < timings[i + 1])) {
+                    updateLyrics(i);
+                    break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

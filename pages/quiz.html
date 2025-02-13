@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Special Quiz</title>
+    <style>
+        body {
+            background-color: #fce4ec;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .question-container {
+            background: #fff3e0;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 20px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .question {
+            font-size: 1.3rem;
+            color: #333;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .options {
+            margin-top: 15px;
+        }
+
+        .option {
+            display: block;
+            background: #ff80ab;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .option:hover {
+            background: #d81b60;
+        }
+
+        .result {
+            font-size: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            color: #d81b60;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .feedback {
+            font-size: 1.2rem;
+            font-family: 'Dancing Script', cursive;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase Modules (v9+)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdCKzBHO6U4KYSBGWwCdJMEaNRLx4ygUs",
+            authDomain: "webdev-351a6.firebaseapp.com",
+            projectId: "webdev-351a6",
+            storageBucket: "webdev-351a6.appspot.com",
+            messagingSenderId: "988953938835",
+            appId: "1:988953938835:web:2a25aa9c971c31ce37f666",
+            measurementId: "G-5C7DS2Y60Z"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Quiz Data
+        const quizData = [
+            { question: "What is my fav food from these:", options: ["Chicken", "Paneer", "Capsicum", "Pongal"], correct: 1 },
+            { question: "What do u think is my no.1 priority in travel destination with u??", options: ["Scandinavia", "North east", "Himalayas", "Mongolia"], correct: 2 },
+            { question: "What will be the color if u mix mine and a little of ur fav color??", options: ["Dark blue", "Brown", "Maroon", "Black"], correct: 0 },
+            { question: "An easy one now..My fav character from Harry Potter", options: ["Harry Potter", "Prof. Snape", "Prof.Umbridge", "Hermione"], correct: 1 },
+            { question: "Which was my first novel", options: ["Harry Potter", "Alchemist", "Percy Jackson", "The hobbit"], correct: 1 },
+            { question: "When we had our kiss the second time was my eyes completely closed??", options: ["YES", "NO", "Think think", "yosi di yosi.."], correct: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const feedbackContainer = document.getElementById("feedback");
+        const resultContainer = document.getElementById("result");
+
+        // Load Questions
+        function loadQuestion() {
+            if (currentQuestion < quizData.length) {
+                questionText.textContent = quizData[currentQuestion].question;
+                optionsContainer.innerHTML = "";
+                feedbackContainer.style.display = "none";
+
+                quizData[currentQuestion].options.forEach((option, index) => {
+                    const button = document.createElement("button");
+                    button.classList.add("option");
+                    button.textContent = option;
+                    button.onclick = () => handleAnswer(index);
+                    optionsContainer.appendChild(button);
+                });
+            } else {
+                showResult();
+            }
+        }
+
+        // Handle Answer Selection
+        async function handleAnswer(selectedIndex) {
+            const correctAnswer = quizData[currentQuestion].correct;
+            feedbackContainer.style.display = "block";
+
+            if (selectedIndex === correctAnswer) {
+                score++;
+                feedbackContainer.textContent = "Wow!! Correct a solta..💖";
+            } else {
+                feedbackContainer.textContent = "Nope..its wrong..don't forget to ask me the right ans..😁";
+            }
+
+            await saveResponse(quizData[currentQuestion].question, quizData[currentQuestion].options[selectedIndex], selectedIndex === correctAnswer);
+
+            currentQuestion++;
+            setTimeout(loadQuestion, 2000);
+        }
+
+        // Save Response to Firestore
+        async function saveResponse(question, response, isCorrect) {
+            try {
+                await addDoc(collection(db, "quiz_responses"), {
+                    question: question,
+                    response: response,
+                    isCorrect: isCorrect,
+                    timestamp: serverTimestamp()
+                });
+                console.log("Response saved!");
+            } catch (error) {
+                console.error("Error saving response: ", error);
+            }
+        }
+
+        // Show Final Result
+        async function showResult() {
+            questionText.style.display = "none";
+            optionsContainer.style.display = "none";
+            feedbackContainer.style.display = "none";
+            resultContainer.style.display = "block";
+
+            let message;
+            if (score === quizData.length) {
+                message = "Wow, full marks di! U know me so well..U earned a dairy milk..😉  ";
+            } else if (score >= quizData.length / 2) {
+                message = "Just miss from perfect score..Sry no dairy milk😁";
+            } else {
+                message = "U got less than 50% so nee enaku dairy milk vangi thara..avolothan..";
+            }
+            resultContainer.textContent = message;
+
+            await saveFinalScore(score, quizData.length);
+        }
+
+        // Save Final Score to Firestore
+        async function saveFinalScore(score, totalQuestions) {
+            try {
+                await addDoc(collection(db, "quiz_results"), {
+                    score: score,
+                    totalQuestions: totalQuestions,
+                    timestamp: serverTimestamp()
+                });
+                console.log("Final score saved!");
+            } catch (error) {
+                console.error("Error saving final score: ", error);
+            }
+        }
+
+        loadQuestion();
+    </script>
+</head>
+<body>
+    <h1>Our Special Quiz 💖</h1>
+    <div class="question-container">
+        <div class="question" id="question-text">Loading...</div>
+        <div class="options" id="options-container"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="result" id="result"></div>
+    </div>
+</body>
+</html>

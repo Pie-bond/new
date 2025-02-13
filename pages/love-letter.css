@@ -1,0 +1,66 @@
+/* Romantic Background */
+body {
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    color: white;
+    text-align: center;
+    padding: 50px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Floating hearts animation */
+@keyframes floatHearts {
+    0% { transform: translateY(0px); opacity: 0.8; }
+    50% { transform: translateY(-20px); opacity: 1; }
+    100% { transform: translateY(0px); opacity: 0.8; }
+}
+
+
+
+/* Letter Box */
+.letter-box {
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+    font-size: 1.4rem;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    text-align: left;
+    line-height: 1.8;
+    white-space: pre-line;
+    height: 200px;
+    overflow-y: auto;
+    border-left: 5px solid white;
+    padding-left: 20px;
+}
+
+/* Title */
+h1 {
+    font-size: 2.5rem;
+    font-family: 'Dancing Script', cursive;
+}
+
+/* Music Button */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    background: white;
+    color: #ff758c;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff758c;
+    color: white;
+}
